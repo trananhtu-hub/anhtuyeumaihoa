@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Gửi Vợ Mai Hoa ❤️ | Món Quà Từ Chồng Anh Tú</title>
+  <meta name="description" content="Món quà tình yêu và lời tỏ tình chân thành nhất dành riêng cho vợ Mai Hoa từ chồng Anh Tú.">
+  
+  <!-- Preconnect and Google Fonts with full Vietnamese support -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Dancing+Script:wght@600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Ambient Audio Player Widget -->
+  <aside class="audio-control" id="audioControl" aria-label="Điều khiển nhạc nền">
+    <button class="music-toggle-btn" id="musicToggleBtn" aria-label="Bật hoặc tạm dừng nhạc" title="Bật/Tắt nhạc tình yêu">
+      <div class="music-disc" id="musicDisc">
+        <svg class="music-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 18V5l12-2v13"></path>
+          <circle cx="6" cy="18" r="3"></circle>
+          <circle cx="18" cy="16" r="3"></circle>
+        </svg>
+      </div>
+      <div class="equalizer" id="equalizer" aria-hidden="true">
+        <span class="bar bar-1"></span>
+        <span class="bar bar-2"></span>
+        <span class="bar bar-3"></span>
+        <span class="bar bar-4"></span>
+      </div>
+      <span class="music-label" id="musicLabel">Giai điệu tình yêu</span>
+    </button>
+  </aside>
+
+  <!-- Canvas for Ambient Cosmic Dust, Glowing Bokeh & Rose Petals -->
+  <canvas id="ambientCanvas" class="ambient-canvas" aria-hidden="true"></canvas>
+
+  <!-- Ambient Cinematic Glow Overlays -->
+  <div class="vignette-overlay" aria-hidden="true"></div>
+  <div class="warm-glow" id="warmGlow" aria-hidden="true"></div>
+
+  <!-- Main Experience Wrapper -->
+  <main class="story-container" id="storyContainer">
+
+    <!-- ================= STAGE 1 & 2: THE BOUQUET GIFT ================= -->
+    <section class="scene scene-bouquet active" id="sceneBouquet" aria-label="Món quà bó hoa">
+      <div class="bouquet-stage-content">
+        <!-- Glowing Halo Backdrop -->
+        <div class="bouquet-halo" aria-hidden="true"></div>
+
+        <!-- Bouquet Container with smooth swap -->
+        <div class="bouquet-visual-box" id="bouquetBox">
+          <img src="assets/bouquet.png" alt="Bó hoa hồng rực rỡ dành tặng Mai Hoa" class="bouquet-img bouquet-original active" id="bouquetOriginal" />
+          <img src="assets/bouquet-photos.png" alt="Bó hoa chứa những nụ cười của Mai Hoa" class="bouquet-img bouquet-photos" id="bouquetPhotos" />
+          
+          <!-- Sparkle particles layer when transformed in stage 2 -->
+          <div class="sparkle-particles-layer" id="sparkleLayer" aria-hidden="true"></div>
+        </div>
+
+        <!-- Caption / Emotional Prompt -->
+        <div class="text-stage" id="bouquetTextStage">
+          <!-- Stage 1 Prompt -->
+          <div class="stage-text stage-1-text active" id="stage1Text">
+            <p class="sub-greeting">Dành tặng người anh yêu nhất</p>
+            <h1 class="romantic-heading">Có một món quà nhỏ dành riêng cho vợ…</h1>
+            <div class="action-btn-group">
+              <button class="romantic-btn primary-glow-btn" id="btnOpenGift">
+                <span class="btn-text">Mở món quà</span>
+                <span class="btn-heart" aria-hidden="true">❤️</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Stage 2 Prompt -->
+          <div class="stage-text stage-2-text" id="stage2Text">
+            <p class="sub-greeting highlight-gold">Món quà đặc biệt nhất</p>
+            <h2 class="romantic-heading">Vợ Mai Hoa, món quà này là dành riêng cho em.</h2>
+            <p class="gentle-caption">Mỗi bông hoa nở rộ đều mang theo nụ cười và ánh mắt đáng yêu của vợ.</p>
+            <div class="action-btn-group">
+              <button class="romantic-btn primary-glow-btn" id="btnToMemories">
+                <span class="btn-text">Có một điều chồng muốn nói…</span>
+                <span class="btn-arrow" aria-hidden="true">✨</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= STAGE 3: MEMORIES IN 3D SPACE ================= -->
+    <section class="scene scene-memories" id="sceneMemories" aria-label="Khoảnh khắc kỷ niệm">
+      <div class="memories-header">
+        <span class="scene-tag">Khoảnh khắc đáng nhớ</span>
+        <h2 class="scene-title">Những nụ cười làm tim anh xao xuyến</h2>
+      </div>
+
+      <!-- Floating Love Quotes Rotator -->
+      <div class="love-quotes-container" id="loveQuotesContainer" aria-live="polite">
+        <p class="love-quote active" data-quote-id="0">“Chồng thương vợ nhiều lắm.”</p>
+        <p class="love-quote" data-quote-id="1">“Cảm ơn em đã đến bên anh.”</p>
+        <p class="love-quote" data-quote-id="2">“Mai Hoa ❤️ Anh Tú”</p>
+        <p class="love-quote" data-quote-id="3">“Our little love story.”</p>
+      </div>
+
+      <!-- 3D Perspective Gallery Area -->
+      <div class="gallery-3d-viewport" id="gallery3dViewport">
+        <div class="gallery-3d-carousel" id="gallery3dCarousel">
+          <!-- Card 1 -->
+          <article class="memory-card card-1" data-index="1" style="--rotY: -32deg; --transZ: 40px; --offsetX: -350px; --offsetY: -20px;">
+            <div class="card-inner">
+              <div class="card-shimmer"></div>
+              <div class="card-photo-wrapper">
+                <img src="assets/face-1.png" alt="Chân dung Mai Hoa - Ngôi sao sáng nhất" class="card-img" />
+              </div>
+              <div class="card-caption">
+                <span class="card-label">Ngôi sao sáng nhất</span>
+                <span class="card-date">Em luôn toả sáng ✨</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 2 -->
+          <article class="memory-card card-2" data-index="2" style="--rotY: -16deg; --transZ: 120px; --offsetX: -175px; --offsetY: 15px;">
+            <div class="card-inner">
+              <div class="card-shimmer"></div>
+              <div class="card-photo-wrapper">
+                <img src="assets/face-2.png" alt="Chân dung Mai Hoa - Ánh mắt dịu dàng" class="card-img" />
+              </div>
+              <div class="card-caption">
+                <span class="card-label">Ánh mắt dịu dàng</span>
+                <span class="card-date">Khiến lòng anh ấm áp</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 3 (Center Hero) -->
+          <article class="memory-card card-3 active-center" data-index="3" style="--rotY: 0deg; --transZ: 210px; --offsetX: 0px; --offsetY: -15px;">
+            <div class="card-inner">
+              <div class="card-shimmer"></div>
+              <div class="card-photo-wrapper">
+                <img src="assets/face-3.png" alt="Chân dung Mai Hoa - Đáng yêu ngây thơ" class="card-img" />
+              </div>
+              <div class="card-caption">
+                <span class="card-label">Nụ cười thiên thần</span>
+                <span class="card-date">Mỗi ngày thêm yêu vợ 💖</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 4 -->
+          <article class="memory-card card-4" data-index="4" style="--rotY: 16deg; --transZ: 120px; --offsetX: 175px; --offsetY: 20px;">
+            <div class="card-inner">
+              <div class="card-shimmer"></div>
+              <div class="card-photo-wrapper">
+                <img src="assets/face-4.png" alt="Chân dung Mai Hoa - Hóm hỉnh tinh nghịch" class="card-img" />
+              </div>
+              <div class="card-caption">
+                <span class="card-label">Hóm hỉnh tinh nghịch</span>
+                <span class="card-date">Luôn mang lại tiếng cười</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 5 -->
+          <article class="memory-card card-5" data-index="5" style="--rotY: 32deg; --transZ: 40px; --offsetX: 350px; --offsetY: -20px;">
+            <div class="card-inner">
+              <div class="card-shimmer"></div>
+              <div class="card-photo-wrapper">
+                <img src="assets/face-5.png" alt="Chân dung Mai Hoa - Dịu dàng e ấp" class="card-img" />
+              </div>
+              <div class="card-caption">
+                <span class="card-label">Người con gái anh thương</span>
+                <span class="card-date">Mãi bên nhau vợ nhé 🌸</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <!-- Navigation & Action -->
+      <div class="memories-action-area">
+        <button class="romantic-btn primary-glow-btn" id="btnToLetter">
+          <span class="btn-text">Đọc điều chồng muốn nói</span>
+          <span class="btn-heart" aria-hidden="true">❤️</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ================= STAGE 4 & 5: LOVE LETTER & REPLAY ================= -->
+    <section class="scene scene-letter" id="sceneLetter" aria-label="Lá thư tỏ tình">
+      
+      <!-- Envelope Presentation Animation Wrapper -->
+      <div class="envelope-presentation" id="envelopePresentation">
+        <div class="envelope-box" id="envelopeBox">
+          <div class="envelope-back"></div>
+          <div class="envelope-paper-preview" id="envelopePaperPreview"></div>
+          <div class="envelope-front"></div>
+          <div class="envelope-flap" id="envelopeFlap">
+            <div class="wax-seal" id="waxSeal" title="Mở phong ấn tình yêu">
+              <span class="seal-initials">M & T</span>
+            </div>
+          </div>
+        </div>
+        <p class="envelope-hint" id="envelopeHint">Chạm vào phong bì để mở thư…</p>
+      </div>
+
+      <!-- The Real Unfolded Handwritten-style Letter -->
+      <article class="letter-parchment" id="letterParchment" role="article" aria-label="Nội dung bức thư của Anh Tú gửi Mai Hoa">
+        <!-- Delicate vintage paper borders & stamp -->
+        <div class="letter-stamp-box">
+          <div class="vintage-stamp">
+            <img src="assets/face-5.png" alt="Tem hình Mai Hoa" class="stamp-photo" />
+            <span class="stamp-postmark">8 THÁNG YÊU<br>TÚ & HOA</span>
+          </div>
+        </div>
+
+        <div class="letter-corner-decor top-left" aria-hidden="true"></div>
+        <div class="letter-corner-decor top-right" aria-hidden="true"></div>
+        <div class="letter-corner-decor bottom-left" aria-hidden="true"></div>
+        <div class="letter-corner-decor bottom-right" aria-hidden="true"></div>
+
+        <!-- Letter Content Header -->
+        <header class="letter-header">
+          <p class="letter-date-line">Hà Nội, những ngày đong đầy yêu thương</p>
+          <h1 class="letter-title">Gửi vợ Mai Hoa ❤️</h1>
+        </header>
+
+        <!-- Verbatim Confession Body from loi-to-tinh.md -->
+        <div class="letter-body-scrollable" id="letterBodyScroll">
+          <p class="letter-paragraph indent">
+            Vợ Mai Hoa ơiii, sau gần 8 tháng quen biết và yêu nhau chồng đã rất nhiều lần muốn tặng vợ một món quà gì đó thật ý nghĩa để cảm ơn vợ thì nay chồng mới có dịp và chồng đủ tự tin để làm điều mà chồng chưa từng làm với ai khác ngoài vợ.
+          </p>
+          <p class="letter-paragraph">
+            Anh cảm nhận là hai chúng ta rất hợp nhau từ sở thích đến lối sống, trước kia anh đã cảm giác chơi vơi, nghĩ mình không hợp để yêu cho đến khi anh gặp được em, người con gái ngoan hiền, đáng yêu, giản dị và tự lực làm mọi việc và rất đặc biệt đối với anh.
+          </p>
+          <p class="letter-paragraph">
+            Hẹn em vào một ngày gần nhất anh có thể nắm tay em và dẫn em đi chơi, đi ăn, đi xem phim, làm những gì mà chúng mình thích hihihi.
+          </p>
+          <p class="letter-paragraph">
+            Đó là những lời ngây ngô từ trong lòng anh nên mong em đừng có cười anh khi đọc đấy.
+          </p>
+          <p class="letter-paragraph letter-closing-highlight">
+            Mai Hoa à, Anh Tú yêu em nhiều lắmmmmmmmmmmm
+          </p>
+
+          <!-- Sign-off & Emotional Highlight -->
+          <footer class="letter-footer">
+            <div class="heartfelt-badge">
+              <span class="badge-icon">🌹</span>
+              <span class="badge-text">Yêu vợ nhiều lắm!</span>
+            </div>
+            <div class="signature-block">
+              <span class="sig-prefix">Yêu thương vô bờ,</span>
+              <span class="signature-name">Chồng Anh Tú ❤️</span>
+            </div>
+          </footer>
+        </div>
+
+        <!-- Stage 5: Navigation & Replay Actions -->
+        <div class="letter-controls" id="letterControls">
+          <button class="romantic-btn outline-btn" id="btnReplayAll" title="Xem lại từ bó hoa mở đầu">
+            <span class="btn-icon">↺</span>
+            <span class="btn-text">Đọc lại từ đầu</span>
+          </button>
+          <button class="romantic-btn secondary-btn" id="btnBackToMemories" title="Quay lại ngắm những kỷ niệm">
+            <span class="btn-icon">✨</span>
+            <span class="btn-text">Xem lại kỷ niệm</span>
+          </button>
+        </div>
+      </article>
+    </section>
+
+  </main>
+
+  <!-- Stage Step Indicator (Subtle dots at bottom center) -->
+  <nav class="experience-stepper" id="experienceStepper" aria-label="Tiến trình câu chuyện">
+    <button class="step-dot active" data-step="1" title="Bó hoa mở đầu" aria-label="Giai đoạn 1: Mở món quà"></button>
+    <button class="step-dot" data-step="2" title="Bó hoa dành riêng cho em" aria-label="Giai đoạn 2: Bó hoa Mai Hoa"></button>
+    <button class="step-dot" data-step="3" title="Khoảnh khắc kỷ niệm" aria-label="Giai đoạn 3: Kỷ niệm"></button>
+    <button class="step-dot" data-step="4" title="Lá thư tỏ tình" aria-label="Giai đoạn 4: Lá thư"></button>
+  </nav>
+
+  <script src="script.js"></script>
+</body>
+</html>
