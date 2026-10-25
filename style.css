@@ -25,10 +25,11 @@
   --seal-red: #8b1424;
   --seal-gold: #d4af37;
 
-  /* Typography */
-  --font-body: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-serif: 'Playfair Display', Georgia, serif;
-  --font-script: 'Dancing Script', cursive, 'Brush Script MT', sans-serif;
+  /* Typography - Romantic Dancing Script throughout the whole website */
+  --font-primary: 'Dancing Script', cursive, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-body: 'Dancing Script', cursive, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-serif: 'Dancing Script', cursive, Georgia, serif;
+  --font-script: 'Dancing Script', cursive;
 
   /* Transitions & Easings */
   --ease-cinematic: cubic-bezier(0.25, 1, 0.35, 1);
@@ -51,7 +52,7 @@ html, body {
   overflow: hidden;
   background-color: var(--bg-dark);
   color: #fff;
-  font-family: var(--font-body);
+  font-family: var(--font-primary);
   user-select: none;
   -webkit-tap-highlight-color: transparent;
 }
@@ -195,8 +196,9 @@ body {
 }
 
 .music-label {
-  font-size: 0.82rem;
-  font-weight: 500;
+  font-family: var(--font-primary);
+  font-size: 1.05rem;
+  font-weight: 700;
   letter-spacing: 0.03em;
   color: var(--accent-gold-light);
 }
@@ -380,11 +382,10 @@ body {
 }
 
 .sub-greeting {
-  font-family: var(--font-body);
-  font-size: 0.95rem;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.18em;
+  font-family: var(--font-primary);
+  font-size: 1.18rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
   color: var(--accent-rose-light);
   margin-bottom: 8px;
   text-shadow: 0 0 12px var(--accent-rose-glow);
@@ -396,20 +397,22 @@ body {
 }
 
 .romantic-heading {
-  font-family: var(--font-serif);
-  font-size: clamp(1.4rem, 4vw, 2.1rem);
-  font-weight: 600;
-  line-height: 1.35;
+  font-family: var(--font-primary);
+  font-size: clamp(1.8rem, 4.8vw, 2.7rem);
+  font-weight: 700;
+  line-height: 1.25;
   color: #fff;
   margin-bottom: 12px;
   text-shadow: 0 4px 18px rgba(0, 0, 0, 0.7), 0 0 25px rgba(255, 140, 180, 0.3);
 }
 
 .gentle-caption {
-  font-size: clamp(0.92rem, 2.5vw, 1.05rem);
-  color: rgba(255, 235, 240, 0.88);
-  max-width: 520px;
-  line-height: 1.55;
+  font-family: var(--font-primary);
+  font-size: clamp(1.1rem, 2.8vw, 1.32rem);
+  font-weight: 600;
+  color: rgba(255, 235, 240, 0.92);
+  max-width: 540px;
+  line-height: 1.6;
   margin-bottom: 18px;
 }
 
@@ -426,11 +429,11 @@ body {
   align-items: center;
   justify-content: center;
   gap: 10px;
-  padding: 13px 32px;
-  font-family: var(--font-body);
-  font-size: 1.02rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
+  padding: 12px 34px;
+  font-family: var(--font-primary);
+  font-size: 1.18rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
   color: #fff;
   background: linear-gradient(135deg, #d83a65 0%, #a21c43 50%, #760c2b 100%);
   border: 1px solid rgba(255, 182, 193, 0.4);
@@ -482,233 +485,243 @@ body {
 }
 
 /* ========================================================
-   SCENE 3: MEMORIES IN 3D SPACE
+   SCENE 3: 3D RAIN OF MEMORIES (MÀN MƯA KỶ NIỆM 3D)
    ======================================================== */
 
 .scene-memories {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   perspective: 1200px;
+  perspective-origin: 50% 45%;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 !important;
 }
 
+/* Floating Stage 3 Header with Glass Backdrop */
 .memories-header {
+  position: absolute;
+  top: max(68px, calc(env(safe-area-inset-top, 20px) + 48px));
+  left: 50%;
+  transform: translateX(-50%);
   text-align: center;
-  margin-bottom: 8px;
-  z-index: 5;
+  z-index: 30;
+  width: min(90vw, 560px);
+  padding: 8px 20px 10px 20px;
+  background: rgba(14, 6, 22, 0.65);
+  border: 1px solid rgba(255, 182, 193, 0.28);
+  border-radius: 20px;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.65), 0 0 25px rgba(255, 117, 143, 0.22);
+  pointer-events: none;
+}
+
+@media (min-width: 768px) {
+  .memories-header {
+    top: max(22px, env(safe-area-inset-top, 20px));
+    width: min(85vw, 620px);
+    padding: 10px 24px 12px 24px;
+  }
 }
 
 .scene-tag {
   display: inline-block;
-  font-size: 0.85rem;
-  font-weight: 500;
-  letter-spacing: 0.2em;
+  font-family: var(--font-primary);
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--accent-gold);
-  margin-bottom: 4px;
+  text-shadow: 0 0 10px var(--accent-gold-glow);
+  margin-bottom: 2px;
 }
 
 .scene-title {
-  font-family: var(--font-serif);
-  font-size: clamp(1.35rem, 3.8vw, 2.1rem);
-  font-weight: 600;
+  font-family: var(--font-primary);
+  font-size: clamp(1.65rem, 4.2vw, 2.4rem);
+  font-weight: 700;
   color: #fff;
-  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.8), 0 0 25px rgba(255, 140, 180, 0.3);
+  line-height: 1.2;
+  text-shadow: 0 0 25px rgba(255, 140, 180, 0.6), 0 4px 15px rgba(0, 0, 0, 0.85);
 }
 
-/* Love Quotes Rotator */
-.love-quotes-container {
-  position: relative;
-  height: 40px;
-  width: 100%;
-  max-width: 600px;
-  margin: 6px auto 14px auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 5;
-}
-
-.love-quote {
-  position: absolute;
-  font-family: var(--font-script);
-  font-size: clamp(1.4rem, 3.5vw, 2rem);
+.scene-subtitle {
+  font-family: var(--font-primary);
+  font-size: clamp(1rem, 2.5vw, 1.18rem);
   font-weight: 600;
-  color: var(--accent-rose-light);
-  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.7), 0 0 16px var(--accent-rose-glow);
-  opacity: 0;
-  transform: translateY(10px) scale(0.95);
-  transition: opacity 0.8s ease, transform 0.8s var(--ease-soft);
-  text-align: center;
-  white-space: nowrap;
+  color: rgba(255, 230, 240, 0.92);
+  margin-top: 3px;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
 }
 
-.love-quote.active {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-}
-
-/* 3D Gallery Viewport & Carousel */
-.gallery-3d-viewport {
-  position: relative;
-  width: 100%;
-  max-width: 1100px;
-  height: min(52vh, 460px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transform-style: preserve-3d;
-  z-index: 4;
-}
-
-.gallery-3d-carousel {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transform-style: preserve-3d;
-  transition: transform 0.6s var(--ease-soft);
-}
-
-/* Luxury Memory Cards */
-.memory-card {
+/* 3D Rain Viewport Stage */
+.rain-3d-viewport {
   position: absolute;
-  width: clamp(170px, 20vw, 230px);
-  height: clamp(240px, 29vw, 330px);
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  perspective: 1200px;
+  perspective-origin: 50% 50%;
+  pointer-events: auto;
+  z-index: 10;
+}
+
+.rain-3d-stage {
+  position: absolute;
+  width: 100%;
+  height: 100%;
   transform-style: preserve-3d;
-  transform: translateX(var(--offsetX)) translateY(var(--offsetY)) translateZ(var(--transZ)) rotateY(var(--rotY));
-  transition: all 0.7s var(--ease-bounce);
+  will-change: transform;
+}
+
+/* Generic Falling Rain Item */
+.rain-item {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  will-change: transform, opacity;
+  transform-style: preserve-3d;
+  pointer-events: auto;
+  user-select: none;
+}
+
+/* Photo Rain Cards */
+.rain-item-photo {
   cursor: pointer;
+  transition: filter 0.3s ease;
 }
 
-.memory-card:hover {
-  transform: translateX(var(--offsetX)) translateY(calc(var(--offsetY) - 16px)) translateZ(calc(var(--transZ) + 40px)) rotateY(0deg) scale(1.06);
-  z-index: 20 !important;
-}
-
-.card-inner {
+.rain-photo-frame {
   position: relative;
   width: 100%;
   height: 100%;
-  padding: 10px 10px 16px 10px;
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.04));
-  border: 1px solid rgba(255, 215, 0, 0.35);
-  border-radius: 18px;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.65), 0 0 25px rgba(255, 140, 180, 0.25);
+  padding: 6px 6px 12px 6px;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.05));
+  border: 1.5px solid rgba(229, 195, 136, 0.45);
+  border-radius: 14px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.65), 0 0 22px rgba(255, 117, 143, 0.35);
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  transition: box-shadow 0.4s ease, border-color 0.4s ease;
+  transition: all 0.35s var(--ease-bounce);
 }
 
-.memory-card:hover .card-inner {
-  border-color: var(--accent-gold);
-  box-shadow: 0 22px 55px rgba(0, 0, 0, 0.8), 0 0 35px rgba(255, 140, 180, 0.5);
-}
-
-.card-shimmer {
-  position: absolute;
-  top: 0;
-  left: -120%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(115deg, transparent 20%, rgba(255, 255, 255, 0.22) 50%, transparent 80%);
-  transform: skewX(-20deg);
-  pointer-events: none;
-}
-
-.memory-card:hover .card-shimmer {
-  animation: cardShine 1s ease forwards;
-}
-
-@keyframes cardShine {
-  from { left: -120%; }
-  to { left: 140%; }
-}
-
-.card-photo-wrapper {
+.rain-photo-inner {
   position: relative;
   width: 100%;
   flex: 1;
-  border-radius: 12px;
+  border-radius: 9px;
   overflow: hidden;
   background: #000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
-.card-img {
+.rain-photo-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center 20%;
-  transition: transform 0.6s var(--ease-soft);
+  display: block;
+  pointer-events: none;
 }
 
-.memory-card:hover .card-img {
-  transform: scale(1.05);
-}
-
-.card-caption {
-  margin-top: 10px;
+.rain-photo-tag {
+  margin-top: 5px;
   text-align: center;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.card-label {
-  font-family: var(--font-body);
-  font-size: 0.85rem;
-  font-weight: 600;
+  font-family: var(--font-primary);
+  font-size: 0.95rem;
+  font-weight: 700;
   color: var(--accent-gold-light);
   letter-spacing: 0.02em;
+  white-space: nowrap;
+  pointer-events: none;
+  text-shadow: 0 0 8px rgba(229, 195, 136, 0.5);
 }
 
-.card-date {
-  font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.7);
+/* Photo Highlight effect on Hover / Click / Tap */
+.rain-item-photo:hover .rain-photo-frame,
+.rain-item-photo.highlighted .rain-photo-frame {
+  border-color: #ffd700;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85), 0 0 40px rgba(255, 105, 180, 0.85), 0 0 20px rgba(255, 215, 0, 0.6);
+  transform: scale(1.15);
 }
 
+.rain-item-photo.highlighted {
+  z-index: 100 !important;
+  animation: photoHeartPulse 1.2s ease forwards;
+}
+
+@keyframes photoHeartPulse {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.35) translateZ(100px); }
+  80% { transform: scale(1.25) translateZ(70px); }
+  100% { transform: scale(1); }
+}
+
+/* Floating Sparkle Heart Spawned on Photo Click */
+.floating-click-heart {
+  position: absolute;
+  pointer-events: none;
+  font-size: 1.2rem;
+  z-index: 120;
+  animation: floatHeartPop 1.2s cubic-bezier(0.1, 0.8, 0.25, 1) forwards;
+}
+
+@keyframes floatHeartPop {
+  0% { transform: translate(0, 0) scale(0.6); opacity: 1; }
+  100% { transform: translate(var(--tx), var(--ty)) scale(1.3); opacity: 0; }
+}
+
+/* Text Rain Items */
+.rain-item-text {
+  font-family: var(--font-primary);
+  font-weight: 700;
+  color: #ffaec0;
+  white-space: nowrap;
+  letter-spacing: 0.03em;
+  pointer-events: none;
+  text-shadow: 
+    0 0 8px rgba(255, 117, 143, 0.95),
+    0 0 20px rgba(255, 60, 110, 0.65),
+    0 0 35px rgba(255, 105, 180, 0.45);
+}
+
+/* Interactive Hint floating above bottom button */
+.rain-interactive-hint {
+  position: absolute;
+  bottom: clamp(75px, 11vh, 88px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 25;
+  font-family: var(--font-primary);
+  font-size: clamp(1rem, 2.6vw, 1.22rem);
+  font-weight: 700;
+  color: var(--accent-gold-light);
+  letter-spacing: 0.05em;
+  text-align: center;
+  pointer-events: none;
+  animation: pulseHint 2.4s infinite ease-in-out;
+  text-shadow: 0 0 10px rgba(229, 195, 136, 0.6);
+  white-space: nowrap;
+}
+
+/* Stage 3 Bottom Action Button */
 .memories-action-area {
-  margin-top: 12px;
-  z-index: 5;
-}
-
-/* Mobile Responsive adjustment for 3D cards */
-@media (max-width: 768px) {
-  .gallery-3d-viewport {
-    height: min(48vh, 380px);
-  }
-
-  .memory-card.card-1 {
-    --offsetX: -140px;
-    --rotY: -22deg;
-    --transZ: 20px;
-  }
-  .memory-card.card-2 {
-    --offsetX: -70px;
-    --rotY: -11deg;
-    --transZ: 70px;
-  }
-  .memory-card.card-3 {
-    --offsetX: 0px;
-    --rotY: 0deg;
-    --transZ: 130px;
-  }
-  .memory-card.card-4 {
-    --offsetX: 70px;
-    --rotY: 11deg;
-    --transZ: 70px;
-  }
-  .memory-card.card-5 {
-    --offsetX: 140px;
-    --rotY: 22deg;
-    --transZ: 20px;
-  }
+  position: absolute;
+  bottom: max(20px, env(safe-area-inset-bottom, 20px));
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 35;
+  display: flex;
+  justify-content: center;
 }
 
 /* ========================================================
@@ -845,10 +858,11 @@ body {
 
 .envelope-hint {
   margin-top: 24px;
-  font-family: var(--font-body);
-  font-size: 0.95rem;
+  font-family: var(--font-primary);
+  font-size: 1.15rem;
+  font-weight: 700;
   color: var(--accent-gold-light);
-  letter-spacing: 0.06em;
+  letter-spacing: 0.05em;
   animation: pulseHint 2s infinite ease-in-out;
 }
 
@@ -995,16 +1009,16 @@ body {
 }
 
 .letter-date-line {
-  font-family: var(--font-body);
-  font-size: 0.8rem;
+  font-family: var(--font-primary);
+  font-size: 1.05rem;
   font-style: italic;
   color: var(--letter-ink-muted);
   margin-bottom: 4px;
 }
 
 .letter-title {
-  font-family: var(--font-script);
-  font-size: clamp(2rem, 5vw, 2.8rem);
+  font-family: var(--font-primary);
+  font-size: clamp(2.3rem, 5.5vw, 3.2rem);
   font-weight: 700;
   color: #6d1425;
   line-height: 1.15;
@@ -1040,12 +1054,13 @@ body {
 }
 
 .letter-paragraph {
-  font-family: var(--font-serif);
-  font-size: clamp(1rem, 2.4vw, 1.14rem);
-  line-height: 1.82;
+  font-family: var(--font-primary);
+  font-size: clamp(1.18rem, 2.8vw, 1.38rem);
+  font-weight: 600;
+  line-height: 1.88;
   color: var(--letter-ink);
   margin-bottom: 16px;
-  text-align: justify;
+  text-align: left;
 }
 
 .letter-paragraph.indent {
@@ -1053,11 +1068,13 @@ body {
 }
 
 .letter-closing-highlight {
-  font-size: clamp(1.08rem, 2.6vw, 1.25rem);
-  font-weight: 600;
+  font-family: var(--font-primary);
+  font-size: clamp(1.25rem, 3.2vw, 1.48rem);
+  font-weight: 700;
   color: #7b1328;
+  line-height: 1.65;
   padding: 10px 14px;
-  background: rgba(255, 117, 143, 0.08);
+  background: rgba(255, 117, 143, 0.1);
   border-left: 3px solid #b82647;
   border-radius: 0 8px 8px 0;
   margin-top: 18px;
@@ -1090,9 +1107,9 @@ body {
 }
 
 .badge-text {
-  font-family: var(--font-body);
-  font-size: 0.92rem;
-  font-weight: 600;
+  font-family: var(--font-primary);
+  font-size: 1.15rem;
+  font-weight: 700;
   color: #8c1732;
   letter-spacing: 0.02em;
 }
@@ -1102,19 +1119,20 @@ body {
   text-align: right;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 2px;
 }
 
 .sig-prefix {
-  font-family: var(--font-body);
-  font-size: 0.85rem;
+  font-family: var(--font-primary);
+  font-size: 1.15rem;
   font-style: italic;
+  font-weight: 600;
   color: var(--letter-ink-muted);
 }
 
 .signature-name {
-  font-family: var(--font-script);
-  font-size: clamp(1.8rem, 4vw, 2.4rem);
+  font-family: var(--font-primary);
+  font-size: clamp(2.3rem, 5.2vw, 3.2rem);
   font-weight: 700;
   color: #5c1120;
   letter-spacing: 0.02em;

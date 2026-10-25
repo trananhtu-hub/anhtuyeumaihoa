@@ -47,10 +47,8 @@
   const letterBodyScroll = document.getElementById('letterBodyScroll');
 
   const stepDots = document.querySelectorAll('.step-dot');
-  const loveQuotes = document.querySelectorAll('.love-quote');
-  const galleryViewport = document.getElementById('gallery3dViewport');
-  const galleryCarousel = document.getElementById('gallery3dCarousel');
-  const memoryCards = document.querySelectorAll('.memory-card');
+  const rain3dViewport = document.getElementById('rain3dViewport');
+  const rain3dStage = document.getElementById('rain3dStage');
 
   // Audio Elements
   const musicToggleBtn = document.getElementById('musicToggleBtn');
@@ -178,79 +176,322 @@
   }
 
   // ==========================================
-  // 3D GALLERY & LOVE QUOTES ROTATOR (STAGE 3)
+  // STAGE 3: 3D RAIN OF MEMORIES ENGINE
   // ==========================================
-  function startLoveQuotes() {
-    stopLoveQuotes();
-    loveQuotes.forEach((q, idx) => {
-      q.classList.toggle('active', idx === 0);
-    });
-    currentQuoteIndex = 0;
+  const LOVE_SENTENCES = [
+    'Anh Tú yêu Mai Hoa nhiều lắmmm',
+    'Yêu Mai Hoa nhất trên đời',
+    'Mai Hoa có yêu anh hông zọoo',
+    'Mai Hoa của chồng Tú là xinh nhất',
+    'Mai Hoa đáng yêu quá điiiiii',
+    'chồng Tú mê vợ Hoa quáaaa'
+  ];
 
-    quotesInterval = setInterval(() => {
-      loveQuotes[currentQuoteIndex].classList.remove('active');
-      currentQuoteIndex = (currentQuoteIndex + 1) % loveQuotes.length;
-      loveQuotes[currentQuoteIndex].classList.add('active');
-    }, 3600);
-  }
+  const PHOTO_ITEMS = [
+    { src: 'assets/face-1.png', tag: 'Ngôi sao sáng nhất ✨' },
+    { src: 'assets/face-2.png', tag: 'Ánh mắt dịu dàng 💖' },
+    { src: 'assets/face-3.png', tag: 'Nụ cười thiên thần 🌸' },
+    { src: 'assets/face-4.png', tag: 'Hóm hỉnh tinh nghịch 🥰' },
+    { src: 'assets/face-5.png', tag: 'Người con gái anh thương ❤️' }
+  ];
 
-  function stopLoveQuotes() {
-    if (quotesInterval) {
-      clearInterval(quotesInterval);
-      quotesInterval = null;
+  let rainItems = [];
+  let rainAnimationFrame = null;
+  let isRainActive = false;
+  let rainStageWidth = window.innerWidth;
+  let rainStageHeight = window.innerHeight;
+
+  // Parallax angles
+  let targetParallaxY = 0;
+  let targetParallaxX = 0;
+  let currentParallaxY = 0;
+  let currentParallaxX = 0;
+
+  function init3dRain() {
+    if (!rain3dStage) return;
+    rain3dStage.innerHTML = '';
+    rainItems = [];
+
+    const isMobile = window.innerWidth < 768;
+    const numPhotos = isMobile ? 6 : 9;
+    const numTexts = isMobile ? 12 : 18;
+
+    rainStageWidth = rain3dViewport ? rain3dViewport.clientWidth : window.innerWidth;
+    rainStageHeight = rain3dViewport ? rain3dViewport.clientHeight : window.innerHeight;
+
+    // 1. Create Photo Rain Items
+    for (let i = 0; i < numPhotos; i++) {
+      const photoData = PHOTO_ITEMS[i % PHOTO_ITEMS.length];
+      const el = document.createElement('div');
+      el.className = 'rain-item rain-item-photo';
+
+      const frame = document.createElement('div');
+      frame.className = 'rain-photo-frame';
+
+      const inner = document.createElement('div');
+      inner.className = 'rain-photo-inner';
+
+      const img = document.createElement('img');
+      img.src = photoData.src;
+      img.alt = photoData.tag;
+      img.className = 'rain-photo-img';
+      img.loading = 'eager';
+
+      const tag = document.createElement('div');
+      tag.className = 'rain-photo-tag';
+      tag.textContent = photoData.tag;
+
+      inner.appendChild(img);
+      frame.appendChild(inner);
+      frame.appendChild(tag);
+      el.appendChild(frame);
+      rain3dStage.appendChild(el);
+
+      // Depth layer assignment
+      const layerRand = Math.random();
+      let z, baseWidth, baseHeight, speed, targetOpacity;
+
+      if (layerRand < 0.28) {
+        // Foreground (near)
+        z = 70 + Math.random() * 140;
+        baseWidth = isMobile ? 115 : 155;
+        baseHeight = isMobile ? 150 : 200;
+        speed = 1.9 + Math.random() * 0.9;
+        targetOpacity = 0.96;
+      } else if (layerRand < 0.72) {
+        // Midground
+        z = -70 + Math.random() * 120;
+        baseWidth = isMobile ? 95 : 125;
+        baseHeight = isMobile ? 125 : 165;
+        speed = 1.3 + Math.random() * 0.7;
+        targetOpacity = 0.88;
+      } else {
+        // Background (far)
+        z = -420 + Math.random() * 260;
+        baseWidth = isMobile ? 75 : 95;
+        baseHeight = isMobile ? 100 : 130;
+        speed = 0.85 + Math.random() * 0.5;
+        targetOpacity = 0.65;
+      }
+
+      el.style.width = `${baseWidth}px`;
+      el.style.height = `${baseHeight}px`;
+
+      // Horizontal spread across width
+      const baseX = (Math.random() - 0.5) * (rainStageWidth * 0.92);
+      // Vertical stagger so rain is already falling across the entire stage
+      const y = -120 + (i / numPhotos) * (rainStageHeight + 200) + (Math.random() * 60 - 30);
+
+      const item = {
+        type: 'photo',
+        el: el,
+        baseX: baseX,
+        x: baseX,
+        y: y,
+        z: z,
+        speed: speed,
+        targetOpacity: targetOpacity,
+        rotX: (Math.random() - 0.5) * 16,
+        rotY: (Math.random() - 0.5) * 20,
+        rotZ: (Math.random() - 0.5) * 16,
+        driftPhase: Math.random() * Math.PI * 2,
+        driftSpeed: 0.8 + Math.random() * 0.8,
+        driftAmp: 18 + Math.random() * 25,
+        isHighlighted: false
+      };
+
+      // Tap / Click Interaction on Photo
+      el.addEventListener('click', (e) => {
+        e.stopPropagation();
+        triggerPhotoHighlight(item);
+      });
+
+      rainItems.push(item);
+    }
+
+    // 2. Create Text Rain Items
+    for (let i = 0; i < numTexts; i++) {
+      const sentence = LOVE_SENTENCES[i % LOVE_SENTENCES.length];
+      const el = document.createElement('div');
+      el.className = 'rain-item rain-item-text';
+      el.textContent = sentence;
+      rain3dStage.appendChild(el);
+
+      const layerRand = Math.random();
+      let z, fontSize, speed, targetOpacity;
+
+      if (layerRand < 0.3) {
+        // Foreground (near)
+        z = 60 + Math.random() * 150;
+        fontSize = isMobile ? 1.4 : 1.95;
+        speed = 1.8 + Math.random() * 0.85;
+        targetOpacity = 0.96;
+      } else if (layerRand < 0.72) {
+        // Midground
+        z = -70 + Math.random() * 110;
+        fontSize = isMobile ? 1.15 : 1.45;
+        speed = 1.25 + Math.random() * 0.6;
+        targetOpacity = 0.85;
+      } else {
+        // Background (far)
+        z = -420 + Math.random() * 260;
+        fontSize = isMobile ? 0.95 : 1.15;
+        speed = 0.8 + Math.random() * 0.45;
+        targetOpacity = 0.6;
+      }
+
+      el.style.fontSize = `${fontSize}rem`;
+
+      const baseX = (Math.random() - 0.5) * (rainStageWidth * 0.88);
+      const y = -100 + (i / numTexts) * (rainStageHeight + 200) + (Math.random() * 50 - 25);
+
+      const item = {
+        type: 'text',
+        el: el,
+        baseX: baseX,
+        x: baseX,
+        y: y,
+        z: z,
+        speed: speed,
+        targetOpacity: targetOpacity,
+        rotX: (Math.random() - 0.5) * 12,
+        rotY: (Math.random() - 0.5) * 16,
+        rotZ: (Math.random() - 0.5) * 14,
+        driftPhase: Math.random() * Math.PI * 2,
+        driftSpeed: 0.9 + Math.random() * 0.7,
+        driftAmp: 16 + Math.random() * 22,
+        textIndex: i % LOVE_SENTENCES.length
+      };
+
+      rainItems.push(item);
     }
   }
 
-  // Mouse Parallax for 3D Gallery
-  function setupGalleryParallax() {
-    if (!galleryViewport) return;
+  // Highlight Photo on Click
+  function triggerPhotoHighlight(item) {
+    if (item.isHighlighted) return;
+    item.isHighlighted = true;
+    item.el.classList.add('highlighted');
 
-    let targetRotY = 0;
-    let targetRotX = 0;
-    let currentRotY = 0;
-    let currentRotX = 0;
-    let isParallaxActive = false;
+    // Spawn 5 floating sparkle hearts
+    const rect = item.el.getBoundingClientRect();
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    const hearts = ['❤️', '💖', '✨', '🌸', '💕'];
 
+    for (let i = 0; i < 5; i++) {
+      const h = document.createElement('span');
+      h.className = 'floating-click-heart';
+      h.textContent = hearts[i % hearts.length];
+      const angle = (Math.PI * 2 * i) / 5;
+      const dist = 45 + Math.random() * 40;
+      h.style.setProperty('--tx', `${Math.cos(angle) * dist}px`);
+      h.style.setProperty('--ty', `${Math.sin(angle) * dist - 25}px`);
+      h.style.left = `${centerX}px`;
+      h.style.top = `${centerY}px`;
+      item.el.appendChild(h);
+
+      setTimeout(() => h.remove(), 1200);
+    }
+
+    setTimeout(() => {
+      item.isHighlighted = false;
+      item.el.classList.remove('highlighted');
+    }, 1300);
+  }
+
+  // 3D Rain Loop
+  function update3dRain(time) {
+    if (!isRainActive) return;
+
+    // Parallax interpolation
+    currentParallaxX += (targetParallaxX - currentParallaxX) * 0.06;
+    currentParallaxY += (targetParallaxY - currentParallaxY) * 0.06;
+
+    if (rain3dStage) {
+      // Gentle ambient sine wave tilt combined with mouse parallax
+      const autoSwayY = Math.sin(time * 0.0008) * 2.5;
+      const autoSwayX = Math.cos(time * 0.0006) * 1.8;
+      rain3dStage.style.transform = `rotateX(${currentParallaxX + autoSwayX}deg) rotateY(${currentParallaxY + autoSwayY}deg)`;
+    }
+
+    const stageH = rainStageHeight || window.innerHeight;
+    const stageW = rainStageWidth || window.innerWidth;
+
+    for (let i = 0; i < rainItems.length; i++) {
+      const it = rainItems[i];
+
+      // If highlighted, slow down fall to let viewer admire
+      const currentSpeed = it.isHighlighted ? it.speed * 0.25 : it.speed;
+      it.y += currentSpeed;
+
+      // Slight horizontal drift
+      const drift = Math.sin(time * 0.001 * it.driftSpeed + it.driftPhase) * it.driftAmp;
+      it.x = it.baseX + drift;
+
+      // Opacity fade in at top and fade out at bottom
+      let opacity = it.targetOpacity;
+      if (it.y < 80) {
+        opacity = Math.max(0, it.targetOpacity * ((it.y + 100) / 180));
+      } else if (it.y > stageH - 120) {
+        opacity = Math.max(0, it.targetOpacity * ((stageH + 120 - it.y) / 240));
+      }
+
+      it.el.style.opacity = opacity.toFixed(3);
+      it.el.style.transform = `translate3d(${it.x.toFixed(1)}px, ${it.y.toFixed(1)}px, ${it.z.toFixed(1)}px) rotateX(${it.rotX.toFixed(1)}deg) rotateY(${it.rotY.toFixed(1)}deg) rotateZ(${it.rotZ.toFixed(1)}deg)`;
+
+      // Respawn when fallen below viewport
+      if (it.y > stageH + 140) {
+        it.y = -100 - Math.random() * 120;
+        it.baseX = (Math.random() - 0.5) * (stageW * 0.92);
+        it.rotX = (Math.random() - 0.5) * 16;
+        it.rotY = (Math.random() - 0.5) * 20;
+        it.rotZ = (Math.random() - 0.5) * 16;
+
+        // If text, cycle phrase
+        if (it.type === 'text') {
+          it.textIndex = (it.textIndex + 1) % LOVE_SENTENCES.length;
+          it.el.textContent = LOVE_SENTENCES[it.textIndex];
+        }
+      }
+    }
+
+    rainAnimationFrame = requestAnimationFrame(update3dRain);
+  }
+
+  function start3dRain() {
+    if (isRainActive) return;
+    isRainActive = true;
+    if (rainItems.length === 0) {
+      init3dRain();
+    }
+    rainAnimationFrame = requestAnimationFrame(update3dRain);
+  }
+
+  function stop3dRain() {
+    isRainActive = false;
+    if (rainAnimationFrame) {
+      cancelAnimationFrame(rainAnimationFrame);
+      rainAnimationFrame = null;
+    }
+  }
+
+  // Setup Mouse Parallax for Stage 3 Rain
+  function setupRainParallax() {
     window.addEventListener('mousemove', (e) => {
       if (currentStage !== STAGES.MEMORIES) return;
-      const rect = galleryViewport.getBoundingClientRect();
-      const x = (e.clientX - (rect.left + rect.width / 2)) / (rect.width / 2);
-      const y = (e.clientY - (rect.top + rect.height / 2)) / (rect.height / 2);
-
-      targetRotY = Math.max(-10, Math.min(10, x * 10));
-      targetRotX = Math.max(-8, Math.min(8, -y * 8));
-
-      if (!isParallaxActive) {
-        isParallaxActive = true;
-        requestAnimationFrame(updateParallax);
-      }
+      const x = (e.clientX - window.innerWidth / 2) / (window.innerWidth / 2);
+      const y = (e.clientY - window.innerHeight / 2) / (window.innerHeight / 2);
+      targetParallaxY = Math.max(-8, Math.min(8, x * 8));
+      targetParallaxX = Math.max(-6, Math.min(6, -y * 6));
     });
 
-    function updateParallax() {
-      if (currentStage !== STAGES.MEMORIES) {
-        isParallaxActive = false;
-        return;
+    window.addEventListener('resize', () => {
+      rainStageWidth = rain3dViewport ? rain3dViewport.clientWidth : window.innerWidth;
+      rainStageHeight = rain3dViewport ? rain3dViewport.clientHeight : window.innerHeight;
+      if (isRainActive) {
+        init3dRain();
       }
-      currentRotY += (targetRotY - currentRotY) * 0.08;
-      currentRotX += (targetRotX - currentRotX) * 0.08;
-
-      if (galleryCarousel) {
-        galleryCarousel.style.transform = `rotateX(${currentRotX}deg) rotateY(${currentRotY}deg)`;
-      }
-
-      if (Math.abs(targetRotY - currentRotY) > 0.05 || Math.abs(targetRotX - currentRotX) > 0.05) {
-        requestAnimationFrame(updateParallax);
-      } else {
-        isParallaxActive = false;
-      }
-    }
-
-    // Card click focus interaction
-    memoryCards.forEach(card => {
-      card.addEventListener('click', () => {
-        memoryCards.forEach(c => c.classList.remove('active-center'));
-        card.classList.add('active-center');
-      });
     });
   }
 
@@ -310,7 +551,7 @@
         sceneBouquet.classList.add('exiting');
       }
     } else if (currentStage === STAGES.MEMORIES) {
-      stopLoveQuotes();
+      stop3dRain();
       sceneMemories.classList.remove('active');
       sceneMemories.classList.add('exiting');
     } else if (currentStage === STAGES.LETTER) {
@@ -342,7 +583,7 @@
       } else if (currentStage === STAGES.MEMORIES) {
         sceneBouquet.classList.remove('active');
         sceneMemories.classList.add('active');
-        startLoveQuotes();
+        start3dRain();
       } else if (currentStage === STAGES.LETTER) {
         sceneMemories.classList.remove('active');
         sceneLetter.classList.add('active');
@@ -536,7 +777,7 @@
   // INITIALIZATION
   // ==========================================
   function init() {
-    setupGalleryParallax();
+    setupRainParallax();
     animationFrameId = requestAnimationFrame(renderAmbientCanvas);
     updateStepper(currentStage);
   }
